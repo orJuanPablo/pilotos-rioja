@@ -5,17 +5,33 @@ export default function navBar() {
     return (
         <div class = "NavBar">
             <ul>
-                <li onClick = {() => cargarEventosView()}>Eventos</li>
-                <li on onClick= {() => cargarPilotosView()}>Pilotos</li>
-                <li onClick = {() => cargarAccidentesView()}>Accidentes</li>
-                <li onClick = {() => cargarLocalidadesView()}>Localidades </li>
-                <li onClick = {() => cargarProvinciasView()}>Provincias</li>
+                <li onClick = {() => EventosLista()}>Eventos</li>
+                <li on onClick= {() => PilotosLista()}>Pilotos</li>
+                <li onClick = {() => AccidentesLista()}>Accidentes</li>
+                <li onClick = {() => ProvinciasLista()}>Provincias</li>
+                <li onClick = {() => LocalidadesLista()}>Localidades </li>
             </ul>
         </div>
     )
 }
 
-const cargarEventosView = () =>
+const EventosLista = () =>
 {
-
+    alert('Lista de Eventos Trabajando...')
 } 
+const PilotosLista = () =>
+{
+    alert('Lista de Pilotos Trabajando...')
+}
+const AccidentesLista = () =>
+{
+    alert('Lista de Accidentes Trabajando...')
+}
+const ProvinciasLista = () =>
+{
+    alert('Lista de Provincias Trabajando...')
+}
+const LocalidadesLista = () =>
+{
+    alert('Lista de Localidades Trabajando...')
+}
