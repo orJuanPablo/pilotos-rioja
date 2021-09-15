@@ -20,13 +20,12 @@ export default  makeStyles(
         {
             flexDirection: 'column',
             ...centeredAlignObject,
-            width: 600,
-            height: 500,
+            width: 500,
+            height: 400,
         },
         Title:
         {
-            fontSize: '2rem',
-            color: '#0984e3'
+            fontSize: '2rem'
         },
         TitleGridContainer:
         {
