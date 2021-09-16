@@ -19,7 +19,7 @@ export default function EventosItemLista( {pilotos} ) {
                         <Typography>
                             Teléfono:  {value.telefono}
                         </Typography>
-                        <Button key = {value._id} color='secondary' contained>Anotar a Evento</Button>
+                        <Button key = {value._id} color='secondary' variant = 'contained'>Asegurar</Button>
                     </ListItem>
                 )
             })}

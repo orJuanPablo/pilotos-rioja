@@ -24,7 +24,7 @@ export default function PilotosLista({token}) {
             <PilotosItemLista pilotos = { dataPilotos } />
             <ListItem>
                 <ListItemText>
-                    <Button id ='createPilotoBtn' contained color='primary'>
+                    <Button id ='createPilotoBtn' variant = 'contained' color='primary'>
                         Agregar nuevo Piloto
                     </Button>
                 </ListItemText>
