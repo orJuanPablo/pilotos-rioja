@@ -1,13 +1,11 @@
-import './App.css';
-import Routes from'./routes/index'
-import PilotosProvider from './context/pilotos/Provider'
+import "./App.css";
+import Routes from "./routes/index";
+import PilotosProvider from "./context/pilotos/Provider";
 
 function App() {
   return (
     <div className="App">
-      <PilotosProvider>
-        <Routes/>
-      </PilotosProvider>
+      <Routes />
     </div>
   );
 }

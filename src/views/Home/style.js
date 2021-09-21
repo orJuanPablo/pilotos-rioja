@@ -1,4 +1,5 @@
 import { makeStyles } from '@material-ui/core/styles';
+import { Block } from '@material-ui/icons';
 
 
 const drawerWidth = 240;
@@ -41,6 +42,7 @@ const useStyles = makeStyles((theme) => ({
     display: 'flex',
     alignItems: 'center',
     padding: theme.spacing(0, 1),
+    height: '120px',
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
     justifyContent: 'flex-end',
@@ -61,10 +63,36 @@ const useStyles = makeStyles((theme) => ({
     }),
     marginLeft: 0,
   },
-  pilotosItem :
-  {
-
+  logoCobertura:{
+    maxWidth: '450px',
+    margin: 'auto'
   },
+  pilLista :
+  {
+    display: 'flex',
+    flexDirection: 'rows'
+    
+  },
+  pilItem:
+  {
+    width: '100%',
+    justifyContent: 'space-around',
+    padding: '0px 5px',
+    backgroundColor: 'black'
+  },
+  Grid:
+  {
+    padding: 15
+  },
+  nombreLIT : 
+  {
+    fontSize: '2rem'
+  },
+  typSmall :
+  {
+    fontSize : '1rem',
+    color: '#b2bec3'
+  }
 }));
 
 export default useStyles

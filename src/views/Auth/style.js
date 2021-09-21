@@ -13,15 +13,15 @@ export default  makeStyles(
             height: '100vh',
             width: '100%',
             flexDirection: 'column',
-            background: '#d2dae2',
             ...centeredAlignObject
         },
         CardContainer:
         {
             flexDirection: 'column',
+            backgroundColor: 'rgba(9, 132, 227, 0.5)',
             ...centeredAlignObject,
-            width: 500,
-            height: 400,
+            maxWidth: 500,
+            maxHeight: 400,
         },
         Title:
         {
@@ -54,6 +54,10 @@ export default  makeStyles(
         {
             fontSize: '1rem',
             color: '#0984e3'
-        }
+        },
+        logoCobertura:{
+            maxWidth: '450px',
+            margin: 'auto'
+          },
     }
 ) 
