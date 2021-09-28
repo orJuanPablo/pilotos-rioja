@@ -1,18 +1,14 @@
-import { makeStyles } from '@material-ui/core/styles';
-import { Block } from '@material-ui/icons';
-
+import { makeStyles } from "@material-ui/core/styles";
+import { Block, Translate } from "@material-ui/icons";
 
 const drawerWidth = 240;
 
 const useStyles = makeStyles((theme) => ({
-  root: 
-  {
-    display: 'flex',
+  root: {
+    display: "flex",
   },
-  appBar: 
-  {
-    transition: theme.transitions.create(['margin', 'width'], 
-    {
+  appBar: {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
@@ -20,7 +16,7 @@ const useStyles = makeStyles((theme) => ({
   appBarShift: {
     width: `calc(100% - ${drawerWidth}px)`,
     marginLeft: drawerWidth,
-    transition: theme.transitions.create(['margin', 'width'], {
+    transition: theme.transitions.create(["margin", "width"], {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
@@ -29,7 +25,7 @@ const useStyles = makeStyles((theme) => ({
     marginRight: theme.spacing(2),
   },
   hide: {
-    display: 'none',
+    display: "none",
   },
   drawer: {
     width: drawerWidth,
@@ -39,60 +35,63 @@ const useStyles = makeStyles((theme) => ({
     width: drawerWidth,
   },
   drawerHeader: {
-    display: 'flex',
-    alignItems: 'center',
+    display: "flex",
+    alignItems: "center",
     padding: theme.spacing(0, 1),
-    height: '120px',
+    height: "120px",
     // necessary for content to be below app bar
     ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: "flex-end",
   },
   content: {
     flexGrow: 1,
     padding: theme.spacing(3),
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.sharp,
       duration: theme.transitions.duration.leavingScreen,
     }),
     marginLeft: -drawerWidth,
   },
   contentShift: {
-    transition: theme.transitions.create('margin', {
+    transition: theme.transitions.create("margin", {
       easing: theme.transitions.easing.easeOut,
       duration: theme.transitions.duration.enteringScreen,
     }),
     marginLeft: 0,
   },
-  logoCobertura:{
-    maxWidth: '450px',
-    margin: 'auto'
+  logoCobertura: {
+    maxWidth: "450px",
+    margin: "auto",
   },
-  pilLista :
-  {
-    display: 'flex',
-    flexDirection: 'rows'
-    
+  pilContainer: {
+    flexDirection: "colums",
   },
-  pilItem:
-  {
-    width: '100%',
-    justifyContent: 'space-around',
-    padding: '0px 5px',
-    backgroundColor: 'black'
+  searchContainer: {
+    align: "left",
+    marginRight: "10px",
+    marginLeft: "auto",
   },
-  Grid:
-  {
-    padding: 15
+  pilLista: {
+    display: "flex",
+    flexDirection: "column",
   },
-  nombreLIT : 
-  {
-    fontSize: '2rem'
+  modalIns:{
+  position: 'absolute',
+  width: 400,
+  backGround : 'rgba(9, 132, 227, 0.5)',
+  boxShadow: theme.shadows[3],
+  padding: theme.spacing(2,4,3),
+  top: '50%',
+  left: '50%',
+  transform: 'Translate(-50%, -50%)'
   },
-  typSmall :
-  {
-    fontSize : '1rem',
-    color: '#b2bec3'
+  formTextField: {
+    width: '100%'
+  },
+  selectForm: {
+    width: '50%'
   }
 }));
 
-export default useStyles
+
+export default useStyles;

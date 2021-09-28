@@ -18,7 +18,6 @@ import ListItemText from "@material-ui/core/ListItemText";
 import EventIcon from "@material-ui/icons/Event";
 import PilotIcon from "@material-ui/icons/SportsMotorsports";
 import LocalHospitalIcon from "@material-ui/icons/LocalHospital";
-import SearchIcon from "@material-ui/icons/Search";
 import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import logoCobertura from "../../img/LogoCoberturaMedicaHeader.png";
 import useStyles from "./style";
@@ -101,9 +100,9 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
           paper: classes.drawerPaper,
         }}
       >
-        <div className={classes.drawerHeader}>
-          <IconButton onClick={handleDrawerClose}>
-            {theme.direction == "ltr" ? (
+        <div className = { classes.drawerHeader }>
+          <IconButton onClick = { handleDrawerClose }>
+            {theme.direction === "ltr" ? (
               <ChevronLeftIcon />
             ) : (
               <ChevronRightIcon />
@@ -112,19 +111,6 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
         </div>
         <Divider />
         <List>
-          <ListItem key="busqueda">
-            <ListItemIcon>
-              {" "}
-              <SearchIcon color="primary" />{" "}
-            </ListItemIcon>
-            <TextField
-              color="primary"
-              placeholder="Buscar..."
-              onChange={() => {}}
-            >
-              {" "}
-            </TextField>
-          </ListItem>
           <ListItem
             button
             key="eventosRuta"
@@ -184,7 +170,7 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
         <div className={classes.drawerHeader} />
         <Divider />
         <div className={classes.workSpace}>
-          {token === "" ? <br /> : <Pilotos token={token} />}
+          <Pilotos token = {token} />
         </div>
       </main>
     </div>

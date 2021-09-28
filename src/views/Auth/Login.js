@@ -12,6 +12,7 @@ import styles from "./style";
 import { useHistory } from "react-router";
 
 import logo from "../../img/LogoCoberturaMedica.png";
+import apiCall from "../../api";
 
 export default function Login({ onLogin }) {
   const classes = styles();
@@ -30,12 +31,12 @@ export default function Login({ onLogin }) {
       return "";
     } else {
       try {
-        const resp = await fetch("http://192.168.1.14:3000/api/auth/login", {
+        const auth = await apiCall({url : "http://192.168.1.14:3000/api/auth/login", 
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userName, password }),
         });
-        const auth = await resp.json();
+        ;
         if (auth.token) {
           onLogin(auth.token);
           localStorage.setItem("token", auth.token);

@@ -1,12 +1,15 @@
 import "./App.css";
 import Routes from "./routes/index";
-import PilotosProvider from "./context/pilotos/Provider";
+import DateFnsUtils from '@date-io/date-fns';
+import { MuiPickersUtilsProvider } from "@material-ui/pickers";
 
 function App() {
   return (
-    <div className="App">
-      <Routes />
-    </div>
+    <MuiPickersUtilsProvider utils={DateFnsUtils}>
+      <div className="App">
+        <Routes />
+      </div>
+    </MuiPickersUtilsProvider>
   );
 }
 

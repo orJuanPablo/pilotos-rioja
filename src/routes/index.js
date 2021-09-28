@@ -9,11 +9,11 @@ import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import FourOFour from "../views/404";
 import PilotosProvider from "../context/pilotos/Provider";
-import { useEffect, useState } from "react";
+import { useHistory, useState } from "react";
 
 export default function Routes() {
   const [token, setToken] = useState(localStorage.getItem("token"));
-
+  const isLogged = (token === null)
   /*------Component did Mount ask for Token ------
     useEffect(() => 
     {
@@ -28,7 +28,7 @@ export default function Routes() {
     setToken(tkn);
   };
   const onLogout = () => {
-    setToken("");
+    setToken(null);
   };
 
   return (
@@ -41,13 +41,10 @@ export default function Routes() {
           <Register />
         </Route>
         <PilotosProvider>
-          <Route path="/Home">
+          <Route path="/home">
             <Home token={token} onLogout={onLogout} />
           </Route>
         </PilotosProvider>
-        <Route path="/">
-          {token !== null ? <Redirect to="/home" /> : <Redirect to="/Login" />}
-        </Route>
         <Route>
           <FourOFour />
         </Route>

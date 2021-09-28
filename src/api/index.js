@@ -1,8 +1,9 @@
-export default async function apiCall({ url, method = "get", body, headers }) {
+export default async function apiCall({ url, method = "GET", body, headers }) {
   try {
-    const response = await fetch({ url, method, body, headers });
+    const response = await fetch(url,{ method, body, headers });
     return response.json();
   } catch (error) {
+    console.error(error)
     Promise.reject(error);
   }
 

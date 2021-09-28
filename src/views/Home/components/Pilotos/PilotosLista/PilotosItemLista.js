@@ -4,77 +4,58 @@ import {
   Typography,
   Grid,
   ListItemText,
+  TableCell,
+  TableRow,
 } from "@material-ui/core";
 import useStyles from "../../../style";
 
-export default function EventosItemLista({ pilotos }) {
-  console.log(pilotos)
-  const classes = useStyles();
-  const handleOnAsegurar = (evt) => {
-    alert("Asegurar "+ evt.target)
-    console.log(evt);
+export default function EventosItemLista(
+  { pilotos },
+  { insPilotos, editPilotos }
+) {
+  // const classes = useStyles();
+  const handleOnAsegurar = (evt, key) => {
+    console.log(key);
   };
-  const handleOnEditar = () => {
-    alert("Editar");
+  const handleOnEditar = (evt) => {
+    //alert("Editar");
   };
   return (
-    <div>
+    <>
       {pilotos?.map((value) => {
         let date = new Date(value.pil_fecNac);
         return (
-          <ListItem className={classes.itemPilotos} key={"li" + value.pil_id}>
-            <Grid onClick = {()=>alert('datos pilotos')}>
-              <ListItemText
-                className={classes.nombreLIT}
-                primary={value.pil_apellido +', '+ value.pil_nombre}
-              ></ListItemText>
-            </Grid>
-            <Grid>
-              <ListItemText
-                className={classes.smallLIT}
-                secondary={"DNI " + value.pil_dni}
-              />
-              <ListItemText
-                className={classes.smallLIT}
-                secondary={
-                  "Fecha de Nacimiento" +
-                  date.getDate() +
-                  "/" +
-                  date.getMonth() +
-                  "/" +
-                  date.getFullYear()
-                }
-              />
-              <ListItemText
-                className={classes.smallLIT}
-                secondary={"Teléfono " + value.pil_tel}
-              />
-            </Grid>
-            <Grid className={classes.btnGrid}>
-              <Button
-                key={"ed" + value.pil_id}
-                onClick={handleOnEditar}
-                color="secondary"
-              >
+          <TableRow key={value.pil_id}>
+            <TableCell>
+              {value.pil_apellido + ", " + value.pil_nombre}
+            </TableCell>
+            <TableCell>{value.pil_dni}</TableCell>
+            <TableCell>
+              {date.getDate() +
+                "/" +
+                date.getMonth() +
+                "/" +
+                date.getFullYear()}
+            </TableCell>
+            <TableCell>{value.pil_tel}</TableCell>
+            <TableCell>{value.pil_email}</TableCell>
+            <TableCell>
+              <Button onClick={(evt) => handleOnEditar(evt)} color="secondary">
                 Editar
               </Button>
+              <br />
               <Button
-                value={"as" + value.pil_id}
-                onClick={(evt)=>handleOnAsegurar(evt)}
-                color="primary"
+                onClick={(evt) => handleOnAsegurar(evt)}
                 variant="contained"
+                color="secondary"
+                key={value.pil_id}
               >
                 Asegurar
               </Button>
-            </Grid>
-          </ListItem>
+            </TableCell>
+          </TableRow>
         );
       })}
-      <ListItem>
-        <Button id="createPilotoBtn" variant="contained" color="primary">
-          Agregar nuevo Piloto
-        </Button>
-      </ListItem>
-    </div>
+    </>
   );
 }

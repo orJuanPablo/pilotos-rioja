@@ -1,29 +1,60 @@
 import React, { useState } from "react";
 import PilotosContext from "./index";
 import apiCall from "../../api";
-import Swal from "sweetalert2";
-import { useHistory } from "react-router";
 
 export default function PilotosProvider({ children }) {
   const [pilotos, setPilotos] = useState([]);
-  const hist = useHistory();
+  const [provincias, setProvincias] = useState([]);
+  const [localidades, setLocalidades] = useState([]);
 
-  const orJPalerta = () => {alert('orJuanPablo')};
-
-  const getPilotos = async () => {
+  const getPilotos = async ({ token }) => {
     try {
       const pilotosFetched = await apiCall({
         url: "http://192.168.1.14:3000/api/pilotos",
-        heders: { authorization: localStorage.getItem("token") },
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
       });
-      console.log(pilotosFetched);
       setPilotos(pilotosFetched);
+      return pilotosFetched;
     } catch (error) {
+      console.error(error);
       setPilotos([]);
     }
   };
+  const getProv = async (token) => {
+    try {
+      const provFetched = await apiCall({
+        url: "http://192.168.1.14:3000/api/provincias",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      });
+      setProvincias(provFetched);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const getLocs = async (token) => {
+    try {
+      const locFetched = await apiCall({
+        url: "http://192.168.1.14:3000/api/localidades",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      });
+      setLocalidades(locFetched);
+    } catch (error) {
+      console.error(error);
+    }
+  };
   return (
-    <PilotosContext.Provider value={{ getPilotos }}>
+    <PilotosContext.Provider
+      value={{ getPilotos, pilotos, getProv, provincias, getLocs, localidades }}
+    >
       {children}
     </PilotosContext.Provider>
   );
