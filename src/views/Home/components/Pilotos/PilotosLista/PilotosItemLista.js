@@ -9,46 +9,51 @@ import {
 } from "@material-ui/core";
 import useStyles from "../../../style";
 
-export default function EventosItemLista(
-  { pilotos },
-  { insPilotos, editPilotos }
-) {
-  // const classes = useStyles();
-  const handleOnAsegurar = (evt, key) => {
-    console.log(key);
+export default function EventosItemLista({
+  pilotos,
+  onInsPiloto,
+  onEditPiloto,
+}) {
+  const handleOnAsegurar = ({ value }) => {
+    const piloto = value;
+    onInsPiloto(piloto.id);
   };
-  const handleOnEditar = (evt) => {
-    //alert("Editar");
+  const handleOnEditar = ({ value }) => {
+    const piloto = value;
+    onEditPiloto(piloto);
   };
   return (
     <>
       {pilotos?.map((value) => {
-        let date = new Date(value.pil_fecNac);
+        let date = new Date(value.fecNac);
         return (
-          <TableRow key={value.pil_id}>
+          <TableRow key={value.id}>
             <TableCell>
-              {value.pil_apellido + ", " + value.pil_nombre}
+              {value.apellido + ", " + value.nombre}
             </TableCell>
-            <TableCell>{value.pil_dni}</TableCell>
+            <TableCell>{value.dni}</TableCell>
             <TableCell>
               {date.getDate() +
+                1 +
                 "/" +
-                date.getMonth() +
+                (date.getMonth() + 1) +
                 "/" +
                 date.getFullYear()}
             </TableCell>
-            <TableCell>{value.pil_tel}</TableCell>
-            <TableCell>{value.pil_email}</TableCell>
+            <TableCell>{value.tel}</TableCell>
+            <TableCell>{value.email}</TableCell>
             <TableCell>
-              <Button onClick={(evt) => handleOnEditar(evt)} color="secondary">
+              <Button
+                onClick={() => handleOnEditar({ value })}
+                color="secondary"
+              >
                 Editar
               </Button>
               <br />
               <Button
-                onClick={(evt) => handleOnAsegurar(evt)}
+                onClick={() => handleOnAsegurar({ value })}
                 variant="contained"
                 color="secondary"
-                key={value.pil_id}
               >
                 Asegurar
               </Button>

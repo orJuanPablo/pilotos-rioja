@@ -1,5 +1,5 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Block, Translate } from "@material-ui/icons";
+import { Block, NoEncryption, Translate } from "@material-ui/icons";
 
 const drawerWidth = 240;
 
@@ -75,7 +75,7 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  modalIns:{
+  modalAdd:{
   position: 'absolute',
   width: 400,
   backGround : 'rgba(9, 132, 227, 0.5)',
@@ -85,12 +85,20 @@ const useStyles = makeStyles((theme) => ({
   left: '50%',
   transform: 'Translate(-50%, -50%)'
   },
+  modalTitle :{
+    backGroundColor : '#d63031',
+    color: '#fff'
+  },
+  checkTutor :{
+    display:'flex',
+    flexDirection:'rows'
+  },
   formTextField: {
     width: '100%'
   },
   selectForm: {
     width: '50%'
-  }
+  },
 }));
 
 

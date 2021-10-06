@@ -11,6 +11,10 @@ import {
   TableCell,
   TableContainer,
   Card,
+  TableBody,
+  TableHead,
+  Checkbox,
+  CardHeader,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { KeyboardDatePicker } from "@material-ui/pickers";
@@ -24,22 +28,43 @@ import EventosLista from "../../Eventos/EventosLista/EventosLista";
 import ProvinciasSelect from "../../ProvinciasSelect";
 import LocalidadesSelect from "../../LocalidadesSelect";
 import apiCall from "../../../../../api";
+import { Label } from "@material-ui/icons";
 
 export default function PilotosLista({ token }) {
   const classes = useStyle();
   const hist = useHistory();
-  const { getPilotos, pilotos, getProv, provincias, localidades, getLocs } =
-    useContext(PilotosContext);
+  const {
+    getPilotos,
+    pilotos,
+    getEventos,
+    eventos,
+    getProv,
+    provincias,
+    localidades,
+    getLocs,
+  } = useContext(PilotosContext);
   const [pilotosLocal, setPilotosLocal] = useState([]);
-  const [modalIns, setModalIns] = useState(false);
+  const [eventosLocal, setEventosLocal] = useState([]);
+  const [modalAdd, setmodalAdd] = useState(false);
+  const [modalIns, setmodalIns] = useState(false);
   const [prov, setProv] = useState(0);
   const [loc, setLoc] = useState(0);
   const [filteredLocs, setFilteredLocs] = useState([]);
   const [selectedDate, handleDateChange] = useState(new Date());
+  const [piloto, setPiloto] = useState(0);
+  const [evento, setEvento] = useState(0);
+  let action = "";
   useEffect(() => {
     try {
       getPilotos({ token }).then((dataPilotos) => {
         setPilotosLocal(dataPilotos);
+      });
+      getEventos({ token }).then((dataEventos) => {
+        setEventosLocal(
+          dataEventos.filter((evt) => {
+            return evt.estado === 1;
+          })
+        );
       });
       getProv({ token });
       getLocs({ token });
@@ -47,21 +72,35 @@ export default function PilotosLista({ token }) {
       setPilotosLocal([]);
     }
   }, []);
+  const mostrarError = () => {
+    Swal.fire({
+      title: "Error 400",
+      text: "Los datos del formulario están incompletos o no son válidos.",
+      confirmButton: true,
+    });
+  };
 
   const buscarPilotos = ({ target }) => {
     if (pilotos?.length) {
       const search = target.value;
       const filteredPilotos = pilotos.filter((value) => {
         return (
-          value.pil_nombre.includes(search) ||
-          value.pil_apellido.includes(search) ||
-          value.pil_dni.includes(search)
+          value.nombre.includes(search) ||
+          value.apellido.includes(search) ||
+          value.dni.includes(search)
         );
       });
       setPilotosLocal(filteredPilotos);
     }
   };
+  const onEditPiloto = (piloto) => {
+    console.log(piloto);
+  };
 
+  const onInsPiloto = (piloto) => {
+    setPiloto(piloto);
+    handleModal("Ins");
+  };
   const onSelctProv = (prov) => {
     setProv(prov);
     setFilteredLocs(localidades.filter((value) => value.clo_prov == prov));
@@ -69,8 +108,18 @@ export default function PilotosLista({ token }) {
   const onSelectLoc = (loc) => {
     setLoc(loc);
   };
-  const handleModalIns = () => {
-    setModalIns(!modalIns);
+  const handleModal = (tipo) => {
+    console.log(tipo);
+    switch (tipo) {
+      case "Add":
+        setmodalAdd(!modalAdd);
+        break;
+      case "Ins":
+        setmodalIns(!modalIns);
+        break;
+      default:
+        break;
+    }
   };
   const addPiloto = () => {
     const piloto = {
@@ -88,33 +137,49 @@ export default function PilotosLista({ token }) {
       prov: prov,
       loc: loc,
       dom: document.getElementById("pil_dom").value,
-    };   
-     apiCall({
-       url: "http://192.168.1.14:3000/api/pilotos",
-       method: "POST",
-       headers: { "Content-Type": "application/json", authorization: token },
-       body: JSON.stringify(piloto),
-     }).then((res) => {
-       handleModalIns()
-       Swal.fire({
-         title: "Piloto anotado",
-         icon: "success",
-         showConfirmButton: true,
-       });
-     }).catch(null);
+    };
+    apiCall({
+      url: "http://192.168.1.14:3000/api/pilotos",
+      method: "POST",
+      headers: { "Content-Type": "application/json", authorization: token },
+      body: JSON.stringify(piloto),
+    })
+      .then((res) => {
+        handleModal("Add");
+
+        Swal.fire({
+          title: "Piloto anotado",
+          text: "el piloto se ha añadido a la base de datos.",
+          icon: "success",
+          showConfirmButton: true,
+        });
+      })
+      .catch(null);
   };
-
-  const editPiloto = (evt) => {
-    alert("editPiloto");
+  const inscribir = () => {
+    const ins = {
+      ins_evt: evento,
+      ins_pil: piloto,
+    };
+    apiCall({
+      url: "http://localhost:3000/api/inscripciones/",
+      method: "POST",
+      headers: { "Content-Type": "application/json", authorization: token },
+      body: JSON.stringify(ins),
+    });
+    handleModal("Ins");
+    Swal.fire({
+      title: "Piloto anotado",
+      text: "el piloto se ha añadido a la lista de inscripción",
+      icon: "success",
+      showConfirmButton: true,
+    });
   };
-
-  const insPiloto = (evt) => {};
-
-  const bodyIns = (
-    <Card className={classes.modalIns}>
-      <Typography variant="h3" color="primary">
-        Nuevo Piloto
-      </Typography>
+  const bodyAdd = (
+    <Card className={classes.modalAdd}>
+      <CardHeader  className={classes.modalTitle} aria-label>
+        
+      </CardHeader>
       <TextField
         className={classes.formTextField}
         color="primary"
@@ -142,7 +207,17 @@ export default function PilotosLista({ token }) {
         value={selectedDate}
         placeholder="dd/MM/YYYY"
         label="Fecha de Nacimiento"
-        onChange={(date) => handleDateChange(date)}
+        onChange={(date) => {
+          handleDateChange(date);
+          const fecha =
+            date?.getFullYear() +
+            "-" +
+            (date?.getMonth() + 1) +
+            "-" +
+            date?.getDate();
+          console.log(fecha);
+          console.log(date);
+        }}
         maxDate={new Date()}
         format="dd/MM/yyyy"
         required
@@ -190,13 +265,55 @@ export default function PilotosLista({ token }) {
       >
         Aceptar
       </Button>
+
       <Button
         id="cancel"
         variant="contained"
         color="primary"
         onClick={() => {
-          handleModalIns();
+          handleModal("Add");
         }}
+      >
+        Cancelar
+      </Button>
+    </Card>
+  );
+  const bodyIns = (
+    <Card className={classes.modalAdd}>
+      <Typography variant="h5" color="secondary">
+        Asegurar Piloto
+      </Typography>
+      <Select
+        className={classes.formTextField}
+        id="selectEvento"
+        onChange={(evt) => setEvento(evt.target.value)}
+      >
+        {eventosLocal?.map((evento) => {
+          let fecha = new Date(evento.fecha);
+          return (
+            <option value={evento.id} key={evento.id}>
+              {evento.tipo} - {evento.loc} -{" "}
+              {fecha.getDate() +
+                1 +
+                "/" +
+                (fecha.getMonth() + 1) +
+                "/" +
+                fecha.getFullYear()}
+            </option>
+          );
+        })}
+      </Select>
+      <br />
+      <br />
+      <br />
+      <Button onClick={() => inscribir()} variant="contained" color="secondary">
+        Inscribir
+      </Button>
+      &nbsp; &nbsp;
+      <Button
+        onClick={() => handleModal("Ins")}
+        variant="contained"
+        color="primary"
       >
         Cancelar
       </Button>
@@ -206,43 +323,49 @@ export default function PilotosLista({ token }) {
     <Container className={classes.pilContainer}>
       <TableContainer>
         <Table className={classes.pilTable}>
-          <TableRow>
-            <TableCell>Nombre y Apellido</TableCell>
-            <TableCell>DNI</TableCell>
-            <TableCell>Fecha de Nacimiento</TableCell>
-            <TableCell>Télefono</TableCell>
-            <TableCell>E-mail</TableCell>
-            <TableCell className={classes.searchContainer}>
-              <Icon>
-                {" "}
-                <SearchIcon color="primary" />{" "}
-              </Icon>
-              <TextField
-                color="primary"
-                placeholder="Buscar..."
-                onChange={(evt) => buscarPilotos(evt)}
-              >
-                {""}
-              </TextField>
-            </TableCell>
-          </TableRow>
-          <PilotosItemLista
-            pilotos={pilotosLocal}
-            evts={(editPiloto, insPiloto)}
-          />
-          <TableRow>
-            <Button
-              className={classes.addPiloto}
-              onClick={handleModalIns}
-              variant="contained"
-              color="primary"
-            >
-              Agregar Piloto
-            </Button>
-          </TableRow>
+          <TableHead>
+            <TableRow>
+              <TableCell>Nombre y Apellido</TableCell>
+              <TableCell>DNI</TableCell>
+              <TableCell>Fecha de Nacimiento</TableCell>
+              <TableCell>Télefono</TableCell>
+              <TableCell>E-mail</TableCell>
+              <TableCell className={classes.searchContainer}>
+                <Icon>
+                  {" "}
+                  <SearchIcon color="primary" />{" "}
+                </Icon>
+                <TextField
+                  color="primary"
+                  placeholder="Buscar..."
+                  onChange={(evt) => buscarPilotos(evt)}
+                >
+                  {""}
+                </TextField>
+              </TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            <PilotosItemLista
+              pilotos={pilotosLocal}
+              onEditPiloto={onEditPiloto}
+              onInsPiloto={onInsPiloto}
+            />
+          </TableBody>
         </Table>
+        <Button
+          className={classes.addPiloto}
+          onClick={() => handleModal("Add")}
+          variant="contained"
+          color="primary"
+        >
+          Agregar Piloto
+        </Button>
       </TableContainer>
-      <Modal open={modalIns} onClose={handleModalIns}>
+      <Modal open={modalAdd} onClose={() => handleModal("Add")}>
+        {bodyAdd}
+      </Modal>
+      <Modal open={modalIns} onClose={() => handleModal("Ins")}>
         {bodyIns}
       </Modal>
     </Container>

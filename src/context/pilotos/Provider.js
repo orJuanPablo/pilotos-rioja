@@ -4,6 +4,7 @@ import apiCall from "../../api";
 
 export default function PilotosProvider({ children }) {
   const [pilotos, setPilotos] = useState([]);
+  const [eventos, setEventos] = useState([]);
   const [provincias, setProvincias] = useState([]);
   const [localidades, setLocalidades] = useState([]);
 
@@ -21,6 +22,22 @@ export default function PilotosProvider({ children }) {
     } catch (error) {
       console.error(error);
       setPilotos([]);
+    }
+  };
+  const getEventos = async ({ token }) => {
+    try {
+      const eventosFetched = await apiCall({
+        url: "http://192.168.1.14:3000/api/eventos",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: token,
+        },
+      });
+      setEventos(eventosFetched);
+      return eventosFetched;
+    } catch (error) {
+      console.error(error);
+      setEventos([]);
     }
   };
   const getProv = async (token) => {
@@ -53,7 +70,7 @@ export default function PilotosProvider({ children }) {
   };
   return (
     <PilotosContext.Provider
-      value={{ getPilotos, pilotos, getProv, provincias, getLocs, localidades }}
+      value={{ getPilotos, pilotos, getEventos, eventos, getProv, provincias, getLocs, localidades }}
     >
       {children}
     </PilotosContext.Provider>

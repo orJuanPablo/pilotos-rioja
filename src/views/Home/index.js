@@ -22,7 +22,9 @@ import PowerSettingsNewIcon from "@material-ui/icons/PowerSettingsNew";
 import logoCobertura from "../../img/LogoCoberturaMedicaHeader.png";
 import useStyles from "./style";
 
-import Pilotos from "./components/Pilotos/PilotosLista/PilotosLista.js";
+import Pilotos from "./components/Pilotos/PilotosLista/PilotosLista";
+import Eventos from "./components/Eventos/EventosLista/EventosLista";
+import Accidentes from './components/Accidentes/index'
 import Swal from "sweetalert2";
 import { useHistory } from "react-router";
 
@@ -30,8 +32,7 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
-  const [sistema, setSistema] = useState(1);
-  const [Busq, setBusq] = useState("");
+  const [sistema, setSistema] = useState('pil');
   const history = useHistory();
   if (token === "") {
     history.push("/login");
@@ -115,7 +116,7 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
             button
             key="eventosRuta"
             onClick={() => {
-              alert("Eventos");
+              setSistema('evt');
             }}
           >
             <ListItemIcon>
@@ -128,7 +129,7 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
             button
             key="pilotosRuta"
             onClick={() => {
-              alert("pilotos");
+              setSistema('pil');
             }}
           >
             <ListItemIcon>
@@ -142,7 +143,7 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
             button
             key="accidentesRuta"
             onClick={() => {
-              alert("ACCIDENTES");
+              setSistema('acc');
             }}
           >
             <ListItemIcon>
@@ -170,8 +171,12 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
         <div className={classes.drawerHeader} />
         <Divider />
         <div className={classes.workSpace}>
-          <Pilotos token = {token} />
-        </div>
+          {
+            sistema==='pil'? <Pilotos token = {token} /> :
+            sistema==='evt'?<Eventos token = {token} /> :
+            sistema==='acc'?<Accidentes token = {token} /> :
+            <br/>
+}        </div>
       </main>
     </div>
   );
