@@ -162,7 +162,7 @@ export default function PilotosLista({ token }) {
       ins_pil: piloto,
     };
     apiCall({
-      url: "http://localhost:3000/api/inscripciones/",
+      url: "inscripciones/",
       method: "POST",
       headers: { "Content-Type": "application/json", authorization: token },
       body: JSON.stringify(ins),

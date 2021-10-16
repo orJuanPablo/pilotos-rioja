@@ -1,4 +1,4 @@
-import { React, useEffect, useState } from "react";
+import { React, useState } from "react";
 import clsx from "clsx";
 import { useTheme } from "@material-ui/core/styles";
 import Drawer from "@material-ui/core/Drawer";
@@ -9,7 +9,7 @@ import List from "@material-ui/core/List";
 import Divider from "@material-ui/core/Divider";
 import IconButton from "@material-ui/core/IconButton";
 import MenuIcon from "@material-ui/icons/Menu";
-import { Card, TextField, CardMedia } from "@material-ui/core";
+import {CardMedia } from "@material-ui/core";
 import ChevronLeftIcon from "@material-ui/icons/ChevronLeft";
 import ChevronRightIcon from "@material-ui/icons/ChevronRight";
 import ListItem from "@material-ui/core/ListItem";
@@ -26,17 +26,12 @@ import Pilotos from "./components/Pilotos/PilotosLista/PilotosLista";
 import Eventos from "./components/Eventos/EventosLista/EventosLista";
 import Accidentes from './components/Accidentes/index'
 import Swal from "sweetalert2";
-import { useHistory } from "react-router";
 
 export default function PersistentDrawerLeft({ token, onLogout }) {
   const classes = useStyles();
   const theme = useTheme();
   const [open, setOpen] = useState(false);
   const [sistema, setSistema] = useState('pil');
-  const history = useHistory();
-  if (token === "") {
-    history.push("/login");
-  }
 
   const handleDrawerOpen = () => {
     setOpen(true);
@@ -56,7 +51,7 @@ export default function PersistentDrawerLeft({ token, onLogout }) {
       if (result.isConfirmed) {
         Swal.fire("Hasta Pronto!!");
         /* cerrar sesión */
-        localStorage.setItem("token", "");
+        localStorage.removeItem("token");
         onLogout();
       } else {
         Swal.fire("Cierre de sesión Cancelado");

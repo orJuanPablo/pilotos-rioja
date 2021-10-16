@@ -1,5 +1,4 @@
 import { makeStyles } from "@material-ui/core/styles";
-import { Block, NoEncryption, Translate } from "@material-ui/icons";
 
 const drawerWidth = 240;
 

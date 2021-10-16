@@ -17,13 +17,14 @@ export default function EventosLista({ token }) {
   const [eventos, setEventos] = useState([]);
   const getEventos = async ({ token }) => {
     try {
-      const eventosFetched = await fetch(
-        "http://192.168.1.14:3000/api/eventos",
-        {
-          method: "GET",
-          headers: { "Content-Type": "Application/json", authorization: token },
-        }
-      );
+      const eventosFetched = await apiCall({
+        url: "eventos",
+        method: "GET",
+        headers: {
+          "Content-Type": "Application/json",
+          authorization: token,
+        },
+      });
       const data = await eventosFetched.json();
       console.log(data);
       setEventos(data);

@@ -1,7 +1,7 @@
 export default async function apiCall({ url, method = "GET", body, headers }) {
   try {
-    const response = await fetch(url,{ method, body, headers });
-    return response.json();
+    const response = await fetch(`http://192.168.1.14:3000/api/${url}`,{ method, body, headers });
+    return response;
   } catch (error) {
     console.error(error)
     Promise.reject(error);
