@@ -31,13 +31,15 @@ export default function Login({ onLogin }) {
       return "";
     } else {
       try {
-        const auth = await apiCall({url : "http://192.168.1.14:3000/api/auth/login", 
+        const fetchedAuth = await apiCall({
+          url: "auth/login",
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ userName, password }),
         });
-        ;
-        if (auth.token) {
+        const auth = await fetchedAuth.json();
+        console.log(auth);
+        if ( auth?.token) {
           onLogin(auth.token);
           localStorage.setItem("token", auth.token);
           hist.push("/home");
@@ -55,7 +57,7 @@ export default function Login({ onLogin }) {
     }
   };
   return (
-    <Container className={classes.Container} >
+    <Container className={classes.Container}>
       <form id="loginForm">
         <Card className={classes.CardContainer}>
           <Grid>

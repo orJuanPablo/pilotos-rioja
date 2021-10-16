@@ -32,17 +32,8 @@ import { Label } from "@material-ui/icons";
 
 export default function PilotosLista({ token }) {
   const classes = useStyle();
-  const hist = useHistory();
-  const {
-    getPilotos,
-    pilotos,
-    getEventos,
-    eventos,
-    getProv,
-    provincias,
-    localidades,
-    getLocs,
-  } = useContext(PilotosContext);
+  const { getPilotos, pilotos, getEventos, eventos } =
+    useContext(PilotosContext);
   const [pilotosLocal, setPilotosLocal] = useState([]);
   const [eventosLocal, setEventosLocal] = useState([]);
   const [modalAdd, setmodalAdd] = useState(false);
@@ -55,31 +46,18 @@ export default function PilotosLista({ token }) {
   const [evento, setEvento] = useState(0);
   let action = "";
   useEffect(() => {
-    try {
-      getPilotos({ token }).then((dataPilotos) => {
-        setPilotosLocal(dataPilotos);
-      });
-      getEventos({ token }).then((dataEventos) => {
-        setEventosLocal(
-          dataEventos.filter((evt) => {
-            return evt.estado === 1;
-          })
-        );
-      });
-      getProv({ token });
-      getLocs({ token });
-    } catch (error) {
-      setPilotosLocal([]);
-    }
+    getPilotos({ token });
+    getEventos({ token });
   }, []);
-  const mostrarError = () => {
-    Swal.fire({
-      title: "Error 400",
-      text: "Los datos del formulario están incompletos o no son válidos.",
-      confirmButton: true,
+  useEffect(() => {
+    setPilotosLocal(pilotos);
+  }, [pilotos]);
+  useEffect(() => {
+    const dataEvts = eventos.filter((value) => {
+      if(eventos) return value.estado === 1;
     });
-  };
-
+    setEventosLocal(dataEvts);
+  }, [eventos]);
   const buscarPilotos = ({ target }) => {
     if (pilotos?.length) {
       const search = target.value;
@@ -103,13 +81,11 @@ export default function PilotosLista({ token }) {
   };
   const onSelctProv = (prov) => {
     setProv(prov);
-    setFilteredLocs(localidades.filter((value) => value.clo_prov == prov));
   };
   const onSelectLoc = (loc) => {
     setLoc(loc);
   };
   const handleModal = (tipo) => {
-    console.log(tipo);
     switch (tipo) {
       case "Add":
         setmodalAdd(!modalAdd);
@@ -139,14 +115,14 @@ export default function PilotosLista({ token }) {
       dom: document.getElementById("pil_dom").value,
     };
     apiCall({
-      url: "http://192.168.1.14:3000/api/pilotos",
+      url: "pilotos",
       method: "POST",
       headers: { "Content-Type": "application/json", authorization: token },
       body: JSON.stringify(piloto),
     })
       .then((res) => {
         handleModal("Add");
-
+        getPilotos({ token });
         Swal.fire({
           title: "Piloto anotado",
           text: "el piloto se ha añadido a la base de datos.",
@@ -162,7 +138,7 @@ export default function PilotosLista({ token }) {
       ins_pil: piloto,
     };
     apiCall({
-      url: "inscripciones/",
+      url: "inscripciones",
       method: "POST",
       headers: { "Content-Type": "application/json", authorization: token },
       body: JSON.stringify(ins),
@@ -177,9 +153,7 @@ export default function PilotosLista({ token }) {
   };
   const bodyAdd = (
     <Card className={classes.modalAdd}>
-      <CardHeader  className={classes.modalTitle} aria-label>
-        
-      </CardHeader>
+      <CardHeader className={classes.modalTitle} aria-label></CardHeader>
       <TextField
         className={classes.formTextField}
         color="primary"
@@ -215,8 +189,6 @@ export default function PilotosLista({ token }) {
             (date?.getMonth() + 1) +
             "-" +
             date?.getDate();
-          console.log(fecha);
-          console.log(date);
         }}
         maxDate={new Date()}
         format="dd/MM/yyyy"
@@ -238,13 +210,14 @@ export default function PilotosLista({ token }) {
       <ProvinciasSelect
         className={classes.selectForm}
         id="pil_cpr"
-        provincias={provincias}
+        token={token}
         onSelectProv={onSelctProv}
       />
       <LocalidadesSelect
         className={classes.selectForm}
         id="pil_clo"
-        localidades={filteredLocs}
+        token={token}
+        selectedProv={prov}
         onSelectLoc={onSelectLoc}
       />
       <TextField
@@ -346,11 +319,15 @@ export default function PilotosLista({ token }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            <PilotosItemLista
-              pilotos={pilotosLocal}
-              onEditPiloto={onEditPiloto}
-              onInsPiloto={onInsPiloto}
-            />
+            {pilotosLocal !== [] ? (
+              <PilotosItemLista
+                pilotos={pilotosLocal}
+                onEditPiloto={onEditPiloto}
+                onInsPiloto={onInsPiloto}
+              />
+            ) : (
+              <br />
+            )}
           </TableBody>
         </Table>
         <Button

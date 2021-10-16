@@ -1,5 +1,5 @@
 import { MenuItem, Select } from "@material-ui/core";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import apiCall from "../../../api";
 import useStyles from "../style";
 
@@ -20,13 +20,14 @@ export default function ProvinciasSelect({ onSelectProv }) {
             authorization: token,
           },
         });
+        provFetched = provFetched.json();
         setProvincias(provFetched);
       } catch (error) {
         console.error(error);
       }
     };
     getProv();
-    console.log()
+    console.log(provincias)
   }, []);
   return (
     <Select

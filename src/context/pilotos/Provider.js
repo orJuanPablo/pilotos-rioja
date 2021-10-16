@@ -5,20 +5,19 @@ import apiCall from "../../api";
 export default function PilotosProvider({ children }) {
   const [pilotos, setPilotos] = useState([]);
   const [eventos, setEventos] = useState([]);
-  const [provincias, setProvincias] = useState([]);
   const [localidades, setLocalidades] = useState([]);
 
   const getPilotos = async ({ token }) => {
     try {
       const pilotosFetched = await apiCall({
-        url: "http://192.168.1.14:3000/api/pilotos",
+        url: "pilotos",
         headers: {
           "Content-Type": "application/json",
           authorization: token,
         },
       });
-      setPilotos(pilotosFetched);
-      return pilotosFetched;
+      const data = await pilotosFetched.json();
+      setPilotos(data);
     } catch (error) {
       console.error(error);
       setPilotos([]);
@@ -27,33 +26,20 @@ export default function PilotosProvider({ children }) {
   const getEventos = async ({ token }) => {
     try {
       const eventosFetched = await apiCall({
-        url: "http://192.168.1.14:3000/api/eventos",
+        url: "eventos",
         headers: {
           "Content-Type": "application/json",
           authorization: token,
         },
       });
-      setEventos(eventosFetched);
-      return eventosFetched;
+      const data = await eventosFetched.json();
+      setEventos(data);
     } catch (error) {
       console.error(error);
       setEventos([]);
     }
   };
-  const getProv = async (token) => {
-    try {
-      const provFetched = await apiCall({
-        url: "http://192.168.1.14:3000/api/provincias",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-      });
-      setProvincias(provFetched);
-    } catch (error) {
-      console.error(error);
-    }
-  };
+
   const getLocs = async (token) => {
     try {
       const locFetched = await apiCall({
@@ -70,7 +56,7 @@ export default function PilotosProvider({ children }) {
   };
   return (
     <PilotosContext.Provider
-      value={{ getPilotos, pilotos, getEventos, eventos, getProv, provincias, getLocs, localidades }}
+      value={{ getPilotos, pilotos, getEventos, eventos }}
     >
       {children}
     </PilotosContext.Provider>
