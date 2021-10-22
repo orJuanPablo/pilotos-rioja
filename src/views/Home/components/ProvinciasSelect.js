@@ -20,14 +20,13 @@ export default function ProvinciasSelect({ onSelectProv }) {
             authorization: token,
           },
         });
-        provFetched = provFetched.json();
-        setProvincias(provFetched);
+        const dataProv = await provFetched.json();
+        setProvincias(dataProv);
       } catch (error) {
         console.error(error);
       }
     };
     getProv();
-    console.log(provincias)
   }, []);
   return (
     <Select

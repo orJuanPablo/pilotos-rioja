@@ -40,7 +40,6 @@ export default function PilotosLista({ token }) {
   const [modalIns, setmodalIns] = useState(false);
   const [prov, setProv] = useState(0);
   const [loc, setLoc] = useState(0);
-  const [filteredLocs, setFilteredLocs] = useState([]);
   const [selectedDate, handleDateChange] = useState(new Date());
   const [piloto, setPiloto] = useState(0);
   const [evento, setEvento] = useState(0);
