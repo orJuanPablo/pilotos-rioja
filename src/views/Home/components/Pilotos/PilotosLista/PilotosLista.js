@@ -13,13 +13,12 @@ import {
   Card,
   TableBody,
   TableHead,
-  Checkbox,
   CardHeader,
+  TableFooter,
 } from "@material-ui/core";
 import SearchIcon from "@material-ui/icons/Search";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import React, { useEffect, useContext, useState } from "react";
-import { useHistory } from "react-router";
 import Swal from "sweetalert2";
 import useStyle from "../../../style";
 import PilotosItemLista from "./PilotosItemLista";
@@ -29,6 +28,7 @@ import ProvinciasSelect from "../../ProvinciasSelect";
 import LocalidadesSelect from "../../LocalidadesSelect";
 import apiCall from "../../../../../api";
 import { Label } from "@material-ui/icons";
+import createTypography from "@material-ui/core/styles/createTypography";
 
 export default function PilotosLista({ token }) {
   const classes = useStyle();
@@ -43,7 +43,6 @@ export default function PilotosLista({ token }) {
   const [selectedDate, handleDateChange] = useState(new Date());
   const [piloto, setPiloto] = useState(0);
   const [evento, setEvento] = useState(0);
-  let action = "";
   useEffect(() => {
     getPilotos({ token });
     getEventos({ token });
@@ -53,7 +52,7 @@ export default function PilotosLista({ token }) {
   }, [pilotos]);
   useEffect(() => {
     const dataEvts = eventos.filter((value) => {
-      if(eventos) return value.estado === 1;
+      if (eventos) return value.estado === 1;
     });
     setEventosLocal(dataEvts);
   }, [eventos]);
@@ -78,11 +77,11 @@ export default function PilotosLista({ token }) {
     setPiloto(piloto);
     handleModal("Ins");
   };
-  const onSelctProv = (prov) => {
-    setProv(prov);
+  const onSelectProv = (provincia) => {
+    setProv(provincia);
   };
-  const onSelectLoc = (loc) => {
-    setLoc(loc);
+  const onSelectLoc = (localidad) => {
+    setLoc(localidad);
   };
   const handleModal = (tipo) => {
     switch (tipo) {
@@ -104,7 +103,7 @@ export default function PilotosLista({ token }) {
       fecNac:
         selectedDate.getFullYear() +
         "-" +
-        selectedDate.getMonth() +
+        (selectedDate.getMonth()+1) +
         "-" +
         selectedDate.getDate(),
       tel: document.getElementById("pil_tel").value,
@@ -152,7 +151,11 @@ export default function PilotosLista({ token }) {
   };
   const bodyAdd = (
     <Card className={classes.modalAdd}>
-      <CardHeader className={classes.modalTitle} aria-label></CardHeader>
+      <CardHeader className={classes.modalTitle} aria-label>
+      </CardHeader>
+      <Typography variant = "h3" color = "primary">
+          Nuevo Piloto
+        </Typography>
       <TextField
         className={classes.formTextField}
         color="primary"
@@ -182,12 +185,6 @@ export default function PilotosLista({ token }) {
         label="Fecha de Nacimiento"
         onChange={(date) => {
           handleDateChange(date);
-          const fecha =
-            date?.getFullYear() +
-            "-" +
-            (date?.getMonth() + 1) +
-            "-" +
-            date?.getDate();
         }}
         maxDate={new Date()}
         format="dd/MM/yyyy"
@@ -210,7 +207,7 @@ export default function PilotosLista({ token }) {
         className={classes.selectForm}
         id="pil_cpr"
         token={token}
-        onSelectProv={onSelctProv}
+        onSelectProv={onSelectProv}
       />
       <LocalidadesSelect
         className={classes.selectForm}
@@ -261,16 +258,11 @@ export default function PilotosLista({ token }) {
         onChange={(evt) => setEvento(evt.target.value)}
       >
         {eventosLocal?.map((evento) => {
-          let fecha = new Date(evento.fecha);
+          let fechaSplit = evento.fecha.split("-");
           return (
             <option value={evento.id} key={evento.id}>
               {evento.tipo} - {evento.loc} -{" "}
-              {fecha.getDate() +
-                1 +
-                "/" +
-                (fecha.getMonth() + 1) +
-                "/" +
-                fecha.getFullYear()}
+              {fechaSplit[2]+"/"+fechaSplit[1]+"/"+fechaSplit[0]}
             </option>
           );
         })}
@@ -327,16 +319,18 @@ export default function PilotosLista({ token }) {
             ) : (
               <br />
             )}
+            <TableFooter>
+              <Button
+                className={classes.addPiloto}
+                onClick={() => handleModal("Add")}
+                variant="contained"
+                color="primary"
+              >
+                Agregar Piloto
+              </Button>
+            </TableFooter>
           </TableBody>
         </Table>
-        <Button
-          className={classes.addPiloto}
-          onClick={() => handleModal("Add")}
-          variant="contained"
-          color="primary"
-        >
-          Agregar Piloto
-        </Button>
       </TableContainer>
       <Modal open={modalAdd} onClose={() => handleModal("Add")}>
         {bodyAdd}

@@ -39,21 +39,6 @@ export default function PilotosProvider({ children }) {
       setEventos([]);
     }
   };
-
-  const getLocs = async (token) => {
-    try {
-      const locFetched = await apiCall({
-        url: "http://192.168.1.14:3000/api/localidades",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: token,
-        },
-      });
-      setLocalidades(locFetched);
-    } catch (error) {
-      console.error(error);
-    }
-  };
   return (
     <PilotosContext.Provider
       value={{ getPilotos, pilotos, getEventos, eventos }}

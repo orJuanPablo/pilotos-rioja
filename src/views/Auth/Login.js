@@ -38,8 +38,7 @@ export default function Login({ onLogin }) {
           body: JSON.stringify({ userName, password }),
         });
         const auth = await fetchedAuth.json();
-        console.log(auth);
-        if ( auth?.token) {
+        if (auth?.token) {
           onLogin(auth.token);
           localStorage.setItem("token", auth.token);
           hist.push("/home");

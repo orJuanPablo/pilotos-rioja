@@ -3,7 +3,7 @@ import React, { useEffect, useState } from "react";
 import apiCall from "../../../api";
 import useStyles from "../style";
 
-export default function ProvinciasSelect({ onSelectProv }) {
+export default function ProvinciasSelect({ onSelectProv, token }) {
   const classes = useStyles();
   const [provincias, setProvincias] = useState([]);
   const handleProvChange = ({ target }) => {
@@ -11,7 +11,7 @@ export default function ProvinciasSelect({ onSelectProv }) {
     onSelectProv(prov);
   };
   useEffect(() => {
-    const getProv = async (token) => {
+    const getProv = async () => {
       try {
         const provFetched = await apiCall({
           url: "provincias",

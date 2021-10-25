@@ -9,21 +9,12 @@ import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
 import FourOFour from "../views/404";
 import PilotosProvider from "../context/pilotos/Provider";
-import Landing from "../views/landing/Landing";
+import Landing from "../views/Landing/Landing";
 import { useState } from "react";
 
 export default function Routes() {
   const [token, setToken] = useState(localStorage.getItem("token"));
-  /*------Component did Mount ask for Token ------
-    useEffect(() => 
-    {
-        if(localStorage.getItem('token')) 
-        {
-            setToken(localStorage.getItem('token'));
-        }
 
-    }, [])//El problema es que el router se ejecuta antes de que el componente esté totalmente montado
-    /*------ End Component did Mount ask for Token ------*/
   const onLogin = (tkn) => {
     setToken(tkn);
   };

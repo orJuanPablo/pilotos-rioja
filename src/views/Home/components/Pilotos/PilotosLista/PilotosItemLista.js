@@ -1,9 +1,5 @@
 import {
   Button,
-  ListItem,
-  Typography,
-  Grid,
-  ListItemText,
   TableCell,
   TableRow,
 } from "@material-ui/core";
@@ -25,20 +21,13 @@ export default function EventosItemLista({
   return (
     <>
       {pilotos?.map((value) => {
-        let date = new Date(value.fecNac);
+        let dateParts = value.fecNac.split("-");
         return (
           <TableRow key={value.id}>
-            <TableCell>
-              {value.apellido + ", " + value.nombre}
-            </TableCell>
+            <TableCell>{value.apellido + ", " + value.nombre}</TableCell>
             <TableCell>{value.dni}</TableCell>
             <TableCell>
-              {date.getDate() +
-                1 +
-                "/" +
-                (date.getMonth() + 1) +
-                "/" +
-                date.getFullYear()}
+              {dateParts[2] + "/" + dateParts[1] + "/" + dateParts[0]}
             </TableCell>
             <TableCell>{value.tel}</TableCell>
             <TableCell>{value.email}</TableCell>

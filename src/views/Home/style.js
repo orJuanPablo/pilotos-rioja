@@ -98,6 +98,10 @@ const useStyles = makeStyles((theme) => ({
   selectForm: {
     width: '50%'
   },
+TableHead: {
+  color : "#e84118",
+  backGroundColor: "#576574"
+}
 }));
 
 
