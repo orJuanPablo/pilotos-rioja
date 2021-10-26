@@ -3,7 +3,6 @@ import {
   TableCell,
   TableRow,
 } from "@material-ui/core";
-import useStyles from "../../../style";
 
 export default function EventosItemLista({
   pilotos,

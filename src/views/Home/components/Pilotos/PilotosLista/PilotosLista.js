@@ -23,12 +23,9 @@ import Swal from "sweetalert2";
 import useStyle from "../../../style";
 import PilotosItemLista from "./PilotosItemLista";
 import PilotosContext from "../../../../../context/pilotos";
-import EventosLista from "../../Eventos/EventosLista/EventosLista";
 import ProvinciasSelect from "../../ProvinciasSelect";
 import LocalidadesSelect from "../../LocalidadesSelect";
 import apiCall from "../../../../../api";
-import { Label } from "@material-ui/icons";
-import createTypography from "@material-ui/core/styles/createTypography";
 
 export default function PilotosLista({ token }) {
   const classes = useStyle();
@@ -51,8 +48,8 @@ export default function PilotosLista({ token }) {
     setPilotosLocal(pilotos);
   }, [pilotos]);
   useEffect(() => {
-    const dataEvts = eventos.filter((value) => {
-      if (eventos) return value.estado === 1;
+    const dataEvts = eventos?.filter((value) => {
+      return value.estado === 1;
     });
     setEventosLocal(dataEvts);
   }, [eventos]);
@@ -103,7 +100,7 @@ export default function PilotosLista({ token }) {
       fecNac:
         selectedDate.getFullYear() +
         "-" +
-        (selectedDate.getMonth()+1) +
+        (selectedDate.getMonth() + 1) +
         "-" +
         selectedDate.getDate(),
       tel: document.getElementById("pil_tel").value,
@@ -151,11 +148,10 @@ export default function PilotosLista({ token }) {
   };
   const bodyAdd = (
     <Card className={classes.modalAdd}>
-      <CardHeader className={classes.modalTitle} aria-label>
-      </CardHeader>
-      <Typography variant = "h3" color = "primary">
-          Nuevo Piloto
-        </Typography>
+      <CardHeader className={classes.modalTitle} aria-label></CardHeader>
+      <Typography variant="h3" color="primary">
+        Nuevo Piloto
+      </Typography>
       <TextField
         className={classes.formTextField}
         color="primary"
@@ -262,7 +258,7 @@ export default function PilotosLista({ token }) {
           return (
             <option value={evento.id} key={evento.id}>
               {evento.tipo} - {evento.loc} -{" "}
-              {fechaSplit[2]+"/"+fechaSplit[1]+"/"+fechaSplit[0]}
+              {fechaSplit[2] + "/" + fechaSplit[1] + "/" + fechaSplit[0]}
             </option>
           );
         })}
@@ -285,8 +281,8 @@ export default function PilotosLista({ token }) {
   );
   return (
     <Container className={classes.pilContainer}>
-      <TableContainer>
-        <Table className={classes.pilTable}>
+      <TableContainer className={classes.customTableContainer}>
+        <Table className={classes.pilTable} stickyHeader>
           <TableHead>
             <TableRow>
               <TableCell>Nombre y Apellido</TableCell>

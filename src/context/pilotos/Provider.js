@@ -5,7 +5,6 @@ import apiCall from "../../api";
 export default function PilotosProvider({ children }) {
   const [pilotos, setPilotos] = useState([]);
   const [eventos, setEventos] = useState([]);
-  const [localidades, setLocalidades] = useState([]);
 
   const getPilotos = async ({ token }) => {
     try {

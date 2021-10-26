@@ -15,7 +15,6 @@ import {
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import React, { useEffect, useState } from "react";
 import apiCall from "../../../../../api";
-import PilotosContext from "../../../../../context/pilotos";
 import useStyles from "../../../style";
 import LocalidadesSelect from "../../LocalidadesSelect";
 import ProvinciasSelect from "../../ProvinciasSelect";
@@ -58,7 +57,7 @@ export default function EventosLista({ token }) {
         selectedDate.getDate(),
       prov,
       loc,
-      pista: document.getElementById('evt_pista'),
+      pista: document.getElementById("evt_pista"),
     };
   };
   const bodyAdd = (
@@ -122,7 +121,7 @@ export default function EventosLista({ token }) {
   );
   const bodyEdit = <Card></Card>;
   useEffect(() => {
-    const getEventos = async ({ token }) => {
+    const getEventos = async () => {
       try {
         const eventosFetched = await apiCall({
           url: "eventos",
@@ -133,7 +132,6 @@ export default function EventosLista({ token }) {
         });
         const data = await eventosFetched.json();
         setEventos(data);
-        console.log(eventos);
       } catch (error) {
         console.error(error);
         setEventos([]);
@@ -147,10 +145,10 @@ export default function EventosLista({ token }) {
       <Table>
         <TableHead>
           <TableRow>
-          <TableCell>Evento</TableCell>
-          <TableCell>Fecha</TableCell>
-          <TableCell>Localidad</TableCell>
-          <TableCell>Buscar</TableCell>
+            <TableCell>Evento</TableCell>
+            <TableCell>Fecha</TableCell>
+            <TableCell>Localidad</TableCell>
+            <TableCell>Buscar</TableCell>
           </TableRow>
         </TableHead>
         <EventosItemLista evts={eventos} token={token} />

@@ -74,35 +74,37 @@ const useStyles = makeStyles((theme) => ({
     display: "flex",
     flexDirection: "column",
   },
-  modalAdd:{
-  position: 'absolute',
-  width: 400,
-  backGround : 'rgba(9, 132, 227, 0.5)',
-  boxShadow: theme.shadows[3],
-  padding: theme.spacing(2,4,3),
-  top: '50%',
-  left: '50%',
-  transform: 'Translate(-50%, -50%)'
+  modalAdd: {
+    position: "absolute",
+    width: 400,
+    backGround: "rgba(9, 132, 227, 0.5)",
+    boxShadow: theme.shadows[3],
+    padding: theme.spacing(2, 4, 3),
+    top: "50%",
+    left: "50%",
+    transform: "Translate(-50%, -50%)",
   },
-  modalTitle :{
-    backGroundColor : '#d63031',
-    color: '#fff'
+  modalTitle: {
+    backGroundColor: "#d63031",
+    color: "#fff",
   },
-  checkTutor :{
-    display:'flex',
-    flexDirection:'rows'
+  checkTutor: {
+    display: "flex",
+    flexDirection: "rows",
   },
   formTextField: {
-    width: '100%'
+    width: "100%",
   },
   selectForm: {
-    width: '50%'
+    width: "50%",
   },
-TableHead: {
-  color : "#e84118",
-  backGroundColor: "#576574"
-}
+  TableHead: {
+    color: "#e84118",
+    backGroundColor: "#576574",
+  },
+  customTableContainer: {
+    overflowX: "initial",
+  },
 }));
-
 
 export default useStyles;

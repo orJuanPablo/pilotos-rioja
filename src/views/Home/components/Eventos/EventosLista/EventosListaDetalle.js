@@ -15,7 +15,6 @@ export default function EventosListaDetalle({ token, evt }) {
   const [inscriptos, setInscriptos] = useState([]);
 
   const evento = evt;
-  let fechaSplit = evento.fecha.split("-");
   const ExcelFile = ExportExcel.ExcelFile;
   const ExcelSheet = ExportExcel.ExcelSheet;
   const ExcelColumn = ExportExcel.ExcelColumn;
@@ -24,7 +23,7 @@ export default function EventosListaDetalle({ token, evt }) {
     const getIns = async () => {
       try {
         const fetched = await apiCall({
-          url: `inscripciones/${evt.id}`,
+          url: `inscripciones/${evento.id}`,
           method: "GET",
           headers: { "Content-Type": "Application/Json", authorization: token },
         });

@@ -1,5 +1,4 @@
 import { MenuItem, Select } from "@material-ui/core";
-import { mergeClasses } from "@material-ui/styles";
 import { useEffect, useState } from "react";
 import apiCall from "../../../api";
 import useStyles from "../style";
@@ -28,7 +27,7 @@ export default function LocalidadesSelect({
   }, []);
   useEffect(() => {
     const filtered = localidades.filter((value) => {
-      return value.clo_prov == selectedProv;
+      return value.clo_prov === selectedProv;
     });
     setFilteredLocs(filtered);
   }, [selectedProv]);

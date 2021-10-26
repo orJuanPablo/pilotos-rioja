@@ -1,17 +1,11 @@
 import {
-  Button,
-  Card,
-  Collapse,
-  Container,
-  Table,
+  
   TableBody,
   TableCell,
-  TableHead,
   TableRow,
 } from "@material-ui/core";
 import { useStyles } from "@material-ui/pickers/views/Calendar/Day";
 import React, { useEffect, useState } from "react";
-import ExportExcel from "react-export-excel";
 import EventosListaDetalle from "./EventosListaDetalle";
 
 export default function EventosItemLista({ evts, token }) {
@@ -42,7 +36,7 @@ export default function EventosItemLista({ evts, token }) {
               </TableCell>
               <TableCell>{evt.loc}</TableCell>
             </TableRow>
-            {expanded == evt.id ? (
+            {expanded === evt.id ? (
               <EventosListaDetalle token={token} evt={evt} />
             ) : (
               <></>
