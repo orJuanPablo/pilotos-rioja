@@ -33,7 +33,7 @@ export default function Routes() {
         </Route>
         <PilotosProvider>
           <Route path="/home">
-            {token!==null ? (
+            {token !== null ? (
               <Home token={token} onLogout={onLogout} />
             ) : (
               <Redirect path="/login" />
