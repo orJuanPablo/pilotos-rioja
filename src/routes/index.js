@@ -7,9 +7,9 @@ import {
 import Home from "../views/Home";
 import Login from "../views/Auth/Login";
 import Register from "../views/Auth/Register";
+import Landing from "../views/Landing/Landing";
 import FourOFour from "../views/404";
 import PilotosProvider from "../context/pilotos/Provider";
-import Landing from "../views/Landing/Landing";
 import { useState } from "react";
 
 export default function Routes() {
