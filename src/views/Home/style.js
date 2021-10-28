@@ -62,6 +62,13 @@ const useStyles = makeStyles((theme) => ({
     maxWidth: "450px",
     margin: "auto",
   },
+  card404: {
+    backgroundColor: "#eed734",
+  },
+  logo404: {
+    maxWidth: "45%",
+    margin: "auto",
+  },
   pilContainer: {
     flexDirection: "colums",
   },
@@ -98,9 +105,11 @@ const useStyles = makeStyles((theme) => ({
   selectForm: {
     width: "50%",
   },
-  TableHead: {
-    color: "#e84118",
-    backGroundColor: "#576574",
+  customTableHeader: {
+    backgroundColor: "#576574",
+  },
+  customCellsHeader: {
+    color: "#fff",
   },
   customTableContainer: {
     overflowX: "initial",

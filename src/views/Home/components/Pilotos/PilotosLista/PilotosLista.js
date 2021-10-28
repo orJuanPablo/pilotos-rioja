@@ -281,15 +281,15 @@ export default function PilotosLista({ token }) {
   );
   return (
     <Container className={classes.pilContainer}>
-      <TableContainer className={classes.customTableContainer}>
-        <Table className={classes.pilTable} stickyHeader>
-          <TableHead>
+      <TableContainer >
+        <Table>
+          <TableHead className={classes.customTableHeader}>
             <TableRow>
-              <TableCell>Nombre y Apellido</TableCell>
-              <TableCell>DNI</TableCell>
-              <TableCell>Fecha de Nacimiento</TableCell>
-              <TableCell>Télefono</TableCell>
-              <TableCell>E-mail</TableCell>
+              <TableCell className={classes.customCellsHeader}>Nombre y Apellido</TableCell>
+              <TableCell className={classes.customCellsHeader}>DNI</TableCell>
+              <TableCell className={classes.customCellsHeader}>Fecha de Nacimiento</TableCell>
+              <TableCell className={classes.customCellsHeader}>Télefono</TableCell>
+              <TableCell className={classes.customCellsHeader}>E-mail</TableCell>
               <TableCell className={classes.searchContainer}>
                 <Icon>
                   {" "}

@@ -23,30 +23,30 @@ export default function Routes() {
   };
 
   return (
-    <Router>
-      <Switch>
-        <Route path="/login">
-          <Login onLogin={onLogin} />
-        </Route>
-        <Route path="/reg">
-          <Register />
-        </Route>
-        <PilotosProvider>
-          <Route path="/home">
+    <PilotosProvider>
+      <Router>
+        <Switch>
+          <Route exact path="/login">
+            <Login onLogin={onLogin} />
+          </Route>
+          <Route exact path="/reg">
+            <Register />
+          </Route>
+          <Route exact path="/home">
             {token !== null ? (
               <Home token={token} onLogout={onLogout} />
             ) : (
-              <Redirect path="/login" />
+              <Redirect exact path="/login" />
             )}
           </Route>
           <Route exact path="/">
             <Landing />
           </Route>
-        </PilotosProvider>
-        <Route>
-          <FourOFour />
-        </Route>
-      </Switch>
-    </Router>
+          <Route>
+            <FourOFour />
+          </Route>
+        </Switch>
+      </Router>
+    </PilotosProvider>
   );
 }
