@@ -48,8 +48,9 @@ export default function PilotosLista({ token }) {
     setPilotosLocal(pilotos);
   }, [pilotos]);
   useEffect(() => {
+    console.log(eventos);
     const dataEvts = eventos?.filter((value) => {
-      return value.estado === 1;
+      return value.estado === 1 && value.tipoId === 1;
     });
     setEventosLocal(dataEvts);
   }, [eventos]);
@@ -257,7 +258,7 @@ export default function PilotosLista({ token }) {
           let fechaSplit = evento.fecha.split("-");
           return (
             <option value={evento.id} key={evento.id}>
-              {evento.tipo} - {evento.loc} -{" "}
+              {evento.pista} -{" "}
               {fechaSplit[2] + "/" + fechaSplit[1] + "/" + fechaSplit[0]}
             </option>
           );
@@ -281,15 +282,23 @@ export default function PilotosLista({ token }) {
   );
   return (
     <Container className={classes.pilContainer}>
-      <TableContainer >
+      <TableContainer>
         <Table>
           <TableHead className={classes.customTableHeader}>
             <TableRow>
-              <TableCell className={classes.customCellsHeader}>Nombre y Apellido</TableCell>
+              <TableCell className={classes.customCellsHeader}>
+                Nombre y Apellido
+              </TableCell>
               <TableCell className={classes.customCellsHeader}>DNI</TableCell>
-              <TableCell className={classes.customCellsHeader}>Fecha de Nacimiento</TableCell>
-              <TableCell className={classes.customCellsHeader}>Télefono</TableCell>
-              <TableCell className={classes.customCellsHeader}>E-mail</TableCell>
+              <TableCell className={classes.customCellsHeader}>
+                Fecha de Nacimiento
+              </TableCell>
+              <TableCell className={classes.customCellsHeader}>
+                Télefono
+              </TableCell>
+              <TableCell className={classes.customCellsHeader}>
+                E-mail
+              </TableCell>
               <TableCell className={classes.searchContainer}>
                 <Icon>
                   {" "}

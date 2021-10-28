@@ -14,6 +14,7 @@ import {
 } from "@material-ui/core";
 import { KeyboardDatePicker } from "@material-ui/pickers";
 import React, { useEffect, useState } from "react";
+import Swal from "sweetalert2";
 import apiCall from "../../../../../api";
 import useStyles from "../../../style";
 import LocalidadesSelect from "../../LocalidadesSelect";
@@ -46,9 +47,26 @@ export default function EventosLista({ token }) {
   const onSelectLoc = (localidad) => {
     setLoc(localidad);
   };
+  const getEventos = async () => {
+    try {
+      const eventosFetched = await apiCall({
+        url: "eventos",
+        headers: {
+          "Content-Type": "Application/json",
+          authorization: token,
+        },
+      });
+      const data = await eventosFetched.json();
+      setEventos(data);
+    } catch (error) {
+      console.error(error);
+      setEventos([]);
+    }
+  };
   const addEvento = () => {
     const evento = {
       tipo: 1,
+      estado: 1,
       fecha:
         selectedDate.getFullYear() +
         "-" +
@@ -57,8 +75,25 @@ export default function EventosLista({ token }) {
         selectedDate.getDate(),
       prov,
       loc,
-      pista: document.getElementById("evt_pista"),
+      pista: document.getElementById("evt_pista").value,
     };
+    apiCall({
+      url: "eventos",
+      method: "POST",
+      headers: { "Content-Type": "application/json", authorization: token },
+      body: JSON.stringify(evento),
+    })
+      .then((res) => {
+        handleModal("Add");
+        getEventos({ token });
+        Swal.fire({
+          title: "Nuevo Evento",
+          text: "El evento se ha añadido a la base de datos.",
+          icon: "success",
+          showConfirmButton: true,
+        });
+      })
+      .catch(null);
   };
   const bodyAdd = (
     <Card className={classes.modalAdd}>
@@ -121,22 +156,6 @@ export default function EventosLista({ token }) {
   );
   const bodyEdit = <Card></Card>;
   useEffect(() => {
-    const getEventos = async () => {
-      try {
-        const eventosFetched = await apiCall({
-          url: "eventos",
-          headers: {
-            "Content-Type": "Application/json",
-            authorization: token,
-          },
-        });
-        const data = await eventosFetched.json();
-        setEventos(data);
-      } catch (error) {
-        console.error(error);
-        setEventos([]);
-      }
-    };
     getEventos(token);
   }, []);
 

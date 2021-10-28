@@ -23,7 +23,7 @@ export default function EventosItemLista({ evts, token }) {
   }, [evts]);
   return (
     <TableBody>
-      {eventos?.map((evt) => {
+      {eventos!=[]? eventos?.map((evt) => {
         let fechaSplit = evt.fecha.split("-");
         return (
           <>
@@ -43,7 +43,7 @@ export default function EventosItemLista({ evts, token }) {
             )}
           </>
         );
-      })}
+      }): <br/>}
     </TableBody>
   );
 }

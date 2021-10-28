@@ -9,32 +9,60 @@ import {
 } from "@material-ui/core";
 import React, { useEffect, useState } from "react";
 import ExportExcel from "react-export-excel";
+import DeleteIcon from "@material-ui/icons/Backspace";
 import apiCall from "../../../../../api";
+import Swal from "sweetalert2";
 
 export default function EventosListaDetalle({ token, evt }) {
   const [inscriptos, setInscriptos] = useState([]);
-
   const evento = evt;
   const ExcelFile = ExportExcel.ExcelFile;
   const ExcelSheet = ExportExcel.ExcelSheet;
   const ExcelColumn = ExportExcel.ExcelColumn;
-
+  const getIns = async () => {
+    try {
+      const fetched = await apiCall({
+        url: `inscripciones/${evento.id}`,
+        method: "GET",
+        headers: { "Content-Type": "Application/Json", authorization: token },
+      });
+      const data = await fetched.json();
+      setInscriptos(data);
+      console.log(inscriptos);
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const delIns = async () => {
+    try {
+      const fetched = await apiCall({
+        url: `inscripciones/${evento.id}`,
+        method: "Delete",
+        headers: { "Content-Type": "Application/Json", authorization: token },
+      });
+    } catch (error) {
+      console.error(error);
+    }
+  };
+  const handleDeleteClick = (datos) => {
+    delIns(datos)
+      .then(
+        Swal.fire({
+          title: "Inscripción Eliminada",
+          text: "El piloto ha sido desvinculado del evento.",
+          icon: "success",
+          showConfirmButton: true,
+        })
+      )
+      .then(getIns())
+      .catch(null);
+  };
   useEffect(() => {
-    const getIns = async () => {
-      try {
-        const fetched = await apiCall({
-          url: `inscripciones/${evento.id}`,
-          method: "GET",
-          headers: { "Content-Type": "Application/Json", authorization: token },
-        });
-        const data = await fetched.json();
-        setInscriptos(data);
-      } catch (error) {
-        console.error(error);
-      }
-    };
     getIns();
   }, []);
+  useEffect(() => {
+    console.log(inscriptos);
+  }, [inscriptos]);
   return (
     <Card>
       <Table>
@@ -47,7 +75,7 @@ export default function EventosListaDetalle({ token, evt }) {
           {inscriptos?.map((element) => {
             let fechaSplit = element.fecNac.split("-");
             return (
-              <TableRow key={element.id}>
+              <TableRow key={element.idI}>
                 <TableCell>
                   {element.apellido}, {element.nombre}
                 </TableCell>
@@ -56,7 +84,10 @@ export default function EventosListaDetalle({ token, evt }) {
                   {fechaSplit[2] + "/" + fechaSplit[1] + "/" + fechaSplit[0]}
                 </TableCell>
                 <TableCell>
-                  <Button color="primary">X</Button>
+                  <DeleteIcon
+                    color="primary"
+                    onClick={() => handleDeleteClick(element.idI)}
+                  ></DeleteIcon>
                 </TableCell>
               </TableRow>
             );
@@ -78,10 +109,10 @@ export default function EventosListaDetalle({ token, evt }) {
                   data={inscriptos}
                   name={`Nómina de pilotos alta - ${evento.pista} - ${evento.fecha} - ${evento.prov} - ${evento.loc}`}
                 >
-                  <ExcelColumn label="Nombre" value="nombre"/>
-                  <ExcelColumn label="Apellido" value="apellido"/>
-                  <ExcelColumn label="DNI" value="dni"/>
-                  <ExcelColumn label="Fecha de nacimiento" value="fecNac"/>
+                  <ExcelColumn label="Nombre" value="nombre" />
+                  <ExcelColumn label="Apellido" value="apellido" />
+                  <ExcelColumn label="DNI" value="dni" />
+                  <ExcelColumn label="Fecha de nacimiento" value="fecNac" />
                 </ExcelSheet>
               </ExcelFile>
             </TableCell>
