@@ -33,10 +33,10 @@ export default function EventosListaDetalle({ token, evt }) {
       console.error(error);
     }
   };
-  const delIns = async () => {
+  const delIns = async (id) => {
     try {
       const fetched = await apiCall({
-        url: `inscripciones/${evento.id}`,
+        url: `inscripciones/${id}`,
         method: "Delete",
         headers: { "Content-Type": "Application/Json", authorization: token },
       });
