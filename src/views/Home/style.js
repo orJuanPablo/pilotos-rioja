@@ -105,12 +105,12 @@ const useStyles = makeStyles((theme) => ({
   selectForm: {
     width: "50%",
   },
-  customTableHeader: {
-    backgroundColor: "#576574",
-  },
-  customCellsHeader: {
-    color: "#fff",
-  },
+  // customTableHeader: {
+  //   backgroundColor: "#576574",
+  // },
+  // customCellsHeader: {
+  //   color: "#fff",
+  // },
   customTableContainer: {
     overflowX: "initial",
   },

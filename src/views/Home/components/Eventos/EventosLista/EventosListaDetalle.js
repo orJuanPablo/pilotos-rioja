@@ -19,16 +19,21 @@ export default function EventosListaDetalle({ token, evt }) {
   const ExcelFile = ExportExcel.ExcelFile;
   const ExcelSheet = ExportExcel.ExcelSheet;
   const ExcelColumn = ExportExcel.ExcelColumn;
-  const getIns = async () => {
+  const getIns = () => {
     try {
-      const fetched = await apiCall({
+      const fetched = apiCall({
         url: `inscripciones/${evento.id}`,
         method: "GET",
         headers: { "Content-Type": "Application/Json", authorization: token },
-      });
-      const data = await fetched.json();
-      setInscriptos(data);
-      console.log(inscriptos);
+      })
+        .then((fetched) => {
+          const data = fetched.json();
+          return data;
+        })
+        .then((data) => {
+          setInscriptos(data);
+          console.log(inscriptos);
+        });
     } catch (error) {
       console.error(error);
     }
@@ -60,9 +65,6 @@ export default function EventosListaDetalle({ token, evt }) {
   useEffect(() => {
     getIns();
   }, []);
-  useEffect(() => {
-    console.log(inscriptos);
-  }, [inscriptos]);
   return (
     <Card>
       <Table>
@@ -100,7 +102,7 @@ export default function EventosListaDetalle({ token, evt }) {
               <ExcelFile
                 element={
                   <Button variant="contained" color="primary">
-                    Reportar
+                    Reportar Alta
                   </Button>
                 }
                 filename={`Nómina de pilotos alta - ${evento.pista} - ${evento.fecha} - ${evento.prov} - ${evento.loc}`}
