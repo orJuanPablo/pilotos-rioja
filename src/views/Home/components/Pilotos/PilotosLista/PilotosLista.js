@@ -142,7 +142,7 @@ export default function PilotosLista({ token }) {
     handleModal("Ins");
     Swal.fire({
       title: "Piloto anotado",
-      text: "el piloto se ha añadido a la lista de inscripción",
+      text: "el piloto se ha añadido a la lista de inscripción del evento",
       icon: "success",
       showConfirmButton: true,
     });
