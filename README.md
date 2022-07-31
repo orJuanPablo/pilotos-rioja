@@ -1,25 +1,21 @@
-# FrontEnd Pilotos La Rioja
+### FrontEnd Pilotos La Rioja
+
 Proyecto de planilla de pilotos para inscripciôn en carreras ingresados de forma manual
 por los administradores del sistema que automatiza la generaciôn de reporte en formato xml.
 
-# Implementación
+### Implementación
+
 Front End con ReactJS.
+
+  Técnologias de ReactJS
+    Material UI.
+    React Export Excel.
+    Sweet Alert 2.
+    
 Back End con NodeJS.
 Base de Datos MySQL.
 Despliegue en Heroku.
 
-# Datos de MockUp
+### Datos de MockUp
 user: admin
 psw: admin123
-
-### Advanced Configuration
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
-
-### Deployment
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
-
-### `npm run build` fails to minify
-
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
